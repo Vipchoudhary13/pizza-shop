@@ -1,0 +1,19 @@
+table {
+  width: 100%;
+}
+
+tr,
+th,
+td {
+  border: 1px solid;
+}
+
+.mainDisplay-pTag {
+  text-align: left;
+  font-weight: 500;
+  margin-bottom: 0;
+}
+.cancel-btn {
+  background-color: crimson;
+  padding: 2px 20px;
+}
