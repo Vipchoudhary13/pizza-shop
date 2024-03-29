@@ -10,7 +10,6 @@ function PizzaDisplay() {
   const { orders } = useSelector((state) => ({
     orders: state.orders,
   }));
-  console.log("orders: ", orders);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -54,7 +53,7 @@ function PizzaDisplay() {
                     key={order.id}
                     style={{
                       backgroundColor:
-                        timers[order.id] > 3 * 60 * 1000 &&
+                        timers[order.id] > .5 * 60 * 1000 &&
                         order.status === "Order in Making"
                           ? "red"
                           : order.status === "Order Placed"

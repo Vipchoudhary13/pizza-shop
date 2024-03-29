@@ -21,16 +21,21 @@ function OrderForm() {
   };
 
   const handleSubmit = (e) => {
+    // console.log('order: ', order);
     e.preventDefault();
-    if (orders.length < 10) { // Check if the maximum limit of orders has been reached
-      dispatch(addOrder(order))
-      setOrder({
-        type: '',
-        size: '',
-        base: '',
-      });
-    } else {
-      alert("Not taking any order for now. Maximum limit reached.");
+    if(order.type && order.base && order.size){
+        if (orders.length < 10) { // Check if the maximum limit of orders has been reached
+          dispatch(addOrder(order))
+          setOrder({
+            type: '',
+            size: '',
+            base: '',
+          });
+        } else {
+          alert("Not taking any order for now. Maximum limit reached.");
+        }
+    }else{
+        alert("Please select the type, size, and base of your pizza.")
     }
   };
 
