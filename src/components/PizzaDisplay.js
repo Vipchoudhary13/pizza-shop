@@ -26,7 +26,7 @@ function PizzaDisplay() {
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [orders]);
+  }, [orders, updateTimers]);
 
   const formatTime = (milliseconds) => {
     const minutes = Math.floor(milliseconds / (1000 * 60));
