@@ -1,4 +1,4 @@
-import { ADD_ORDER, MOVE_ORDER } from "./actionTypes";
+import { ADD_ORDER, CANCEL_ORDER, MOVE_ORDER } from "./actionTypes";
 
 const initialState = {
   orders: [],
@@ -34,6 +34,11 @@ const reducer = (state = initialState, action) => {
           )
           .sort((a, b) => compareOrders(a, b)),
       };
+    case CANCEL_ORDER:
+      const filteredOrders = state.orders.filter(
+        (order) => order.id !== action.payload
+      );
+      return { ...state, orders: filteredOrders };
     default:
       return state;
   }
@@ -78,7 +83,7 @@ const getStageDelay = (order) => {
 const getMakingTime = (size) => {
   switch (size) {
     case "Small":
-      return .5 * 60 * 1000; // 3 minutes in milliseconds
+      return 0.5 * 60 * 1000; // 3 minutes in milliseconds
     case "Medium":
       return 4 * 60 * 1000; // 4 minutes in milliseconds
     case "Large":

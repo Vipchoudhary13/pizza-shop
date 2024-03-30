@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { moveOrder } from "../redux/action";
+import { cancelOrder, moveOrder } from "../redux/action";
 
 function MainDisplay() {
   const dispatch = useDispatch();
@@ -27,6 +27,10 @@ function MainDisplay() {
     return orders.filter((order) => order.status === "Order Picked").length;
   };
 
+  const handleCancel = (orderId) => {
+    dispatch(cancelOrder(orderId));
+  };
+
   return (
     <div style={{ margin: "20px" }}>
       <h2 className="text-decoration-underline">Main Section</h2>
@@ -50,7 +54,8 @@ function MainDisplay() {
                   order.status !== "Order Picked" && (
                     <button
                       className="order-btn cancel-btn"
-                      onClick={() => dispatch(moveOrder(order.id, "cancel"))}
+                    //   onClick={() => dispatch(moveOrder(order.id, "cancel"))}
+                    onClick={() => handleCancel(order.id)}
                     >
                       Cancel
                     </button>
