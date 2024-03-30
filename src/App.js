@@ -1,4 +1,3 @@
-import logo from "./logo.svg";
 import "./App.css";
 import "./styles/style.css";
 import OrderForm from "./components/OrderForm";

@@ -11,14 +11,6 @@ function PizzaDisplay() {
     orders: state.orders,
   }));
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      updateTimers();
-    }, 1000);
-
-    return () => clearInterval(interval);
-  }, [orders]);
-
   const updateTimers = () => {
     const now = new Date();
     const updatedTimers = {};
@@ -27,6 +19,14 @@ function PizzaDisplay() {
     });
     setTimers(updatedTimers);
   };
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      updateTimers();
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [orders]);
 
   const formatTime = (milliseconds) => {
     const minutes = Math.floor(milliseconds / (1000 * 60));
@@ -73,7 +73,7 @@ function PizzaDisplay() {
                     <p>Size: {order.size}</p>
                     <p>Base: {order.base}</p>
                     <p>Status: {order.status}</p>
-                    {index !== 3 && ( // Don't show time for Order Picked stage
+                    {index !== 3 && (
                       <p>Time Spent: {formatTime(timers[order.id])}</p>
                     )}
                     {index < 3 && (
