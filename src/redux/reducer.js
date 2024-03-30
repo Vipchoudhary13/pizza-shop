@@ -38,7 +38,7 @@ const reducer = (state = initialState, action) => {
       const filteredOrders = state.orders.filter(
         (order) => order.id !== action.payload
       );
-      return { ...state, orders: filteredOrders };
+      return { ...state, orders: filteredOrders }; 
     default:
       return state;
   }
@@ -83,7 +83,7 @@ const getStageDelay = (order) => {
 const getMakingTime = (size) => {
   switch (size) {
     case "Small":
-      return 0.5 * 60 * 1000; // 3 minutes in milliseconds
+      return 3 * 60 * 1000; // 3 minutes in milliseconds
     case "Medium":
       return 4 * 60 * 1000; // 4 minutes in milliseconds
     case "Large":

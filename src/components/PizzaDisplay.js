@@ -6,6 +6,7 @@ import MainDisplay from "./MainDisplay";
 
 function PizzaDisplay() {
   const [timers, setTimers] = useState({});
+  const [orderIntervals, setOrderIntervals] = useState({});
   const dispatch = useDispatch();
   const { orders } = useSelector((state) => ({
     orders: state.orders,
@@ -21,12 +22,17 @@ function PizzaDisplay() {
   };
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      updateTimers();
-    }, 1000);
+    let intervalId;
+      if (orders.length > 0) {
+        intervalId = setInterval(() => {
+          updateTimers();
+        }, 1000);
+      }
 
-    return () => clearInterval(interval);
+    // Clear interval when component unmounts
+    return () => clearInterval(intervalId);
   }, [orders]);
+
 
   const formatTime = (milliseconds) => {
     const minutes = Math.floor(milliseconds / (1000 * 60));
@@ -36,7 +42,7 @@ function PizzaDisplay() {
       .padStart(2, "0")}`;
   };
 
-  const handleNextStage = (orderId) => {
+  const handleNextStage = (orderId, status) => {
     dispatch(moveOrder(orderId, "next"));
   };
 
@@ -47,13 +53,16 @@ function PizzaDisplay() {
           <div key={stage} style={{ flex: 1 }}>
             <h2>{stage}</h2>
             {orders.map((order) => {
+              let time = order.size === 'Small' ? 3 * 60 * 1000 :
+              order.size === 'Medium' ? 4 * 60 * 1000 :
+              order.size === 'Large' ? 5 * 60 * 1000 :0
               if (order.status === stage) {
                 return (
                   <div
                     key={order.id}
                     style={{
                       backgroundColor:
-                        timers[order.id] > .5 * 60 * 1000 &&
+                        timers[order.id] > time &&
                         order.status === "Order in Making"
                           ? "red"
                           : order.status === "Order Placed"
@@ -79,7 +88,9 @@ function PizzaDisplay() {
                     {index < 3 && (
                       <div>
                         <button
-                          onClick={() => handleNextStage(order.id)}
+                          onClick={() =>
+                            handleNextStage(order.id, order.status)
+                          }
                           className="order-btn"
                         >
                           Next Stage
@@ -96,7 +107,7 @@ function PizzaDisplay() {
         ))}
       </div>
       <hr />
-      {orders.length>0 && <MainDisplay />}
+      {orders.length > 0 && <MainDisplay />}
     </div>
   );
 }

@@ -17,8 +17,15 @@ function MainDisplay() {
   const getTotalTimeSpent = () => {
     let totalTime = 0;
     orders.forEach((order) => {
-      const now = new Date();
-      totalTime += now - order.time;
+        // console.log('order: status in main', order);
+      if (order.status === "Order Picked") {
+        order.time = 0;
+      } else {
+        const now = new Date();
+        totalTime += now - order.time;
+      }
+    //   const now = new Date();
+    //   totalTime += now - order.time;
     });
     return formatTime(totalTime);
   };
@@ -44,25 +51,31 @@ function MainDisplay() {
           </tr>
         </thead>
         <tbody>
-          {orders.map((order) => (
-            <tr key={order.id}>
-              <td>{order.id}</td>
-              <td>{order.status}</td>
-              <td>{formatTime(new Date() - order.time)}</td>
-              <td>
-                {order.status !== "Order Ready" &&
-                  order.status !== "Order Picked" && (
-                    <button
-                      className="order-btn cancel-btn"
-                    //   onClick={() => dispatch(moveOrder(order.id, "cancel"))}
-                    onClick={() => handleCancel(order.id)}
-                    >
-                      Cancel
-                    </button>
-                  )}
-              </td>
-            </tr>
-          ))}
+          {orders.map((order) => {
+            return (
+              <tr key={order.id}>
+                <td>{order.id}</td>
+                <td>{order.status}</td>
+                <td>{`${
+                  order.status === "Order Picked"
+                    ? "0 min 0 sec"
+                    : formatTime(new Date() - order.time)
+                }`}</td>
+                {/* <td>{formatTime(new Date() - order.time)}</td> */}
+                <td>
+                  {order.status !== "Order Ready" &&
+                    order.status !== "Order Picked" && (
+                      <button
+                        className="order-btn cancel-btn"
+                        onClick={() => handleCancel(order.id)}
+                      >
+                        Cancel
+                      </button>
+                    )}
+                </td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
       <p className="mainDisplay-pTag">
