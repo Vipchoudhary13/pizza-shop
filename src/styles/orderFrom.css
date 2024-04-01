@@ -1,0 +1,14 @@
+h2 {
+  font-size: x-large;
+}
+.order-form>select{
+    font-size: small;
+}
+.order-btn {
+  background-color: #fc8b2d;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 25px;
+  cursor: pointer;
+}
